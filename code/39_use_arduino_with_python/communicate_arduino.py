@@ -9,6 +9,6 @@ data = []
 for _ in range(10):
     dev.write(b'2')
     line = dev.readline()
-    data.append(line)
+    data.append(line.decode('ascii'))
 
 print(data)
