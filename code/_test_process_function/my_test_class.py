@@ -29,14 +29,14 @@ class MyTestClass:
 
 
 class ProcessClass:
-    def __init__(self, cls, stop_event, *args, **kwargs):
+    def __init__(self, cls, *args, **kwargs):
         self.cls = cls
         self.method_queue = Queue()
-        self.stop_event = stop_event
+        self.stop_event = Event()
         if kwargs:
-            kwargs.update({'stop_event': stop_event, 'method_queue': self.method_queue})
+            kwargs.update({'stop_event': self.stop_event, 'method_queue': self.method_queue})
         else:
-            kwargs = {'stop_event': stop_event, 'method_queue': self.method_queue}
+            kwargs = {'stop_event': self.stop_event, 'method_queue': self.method_queue}
         self.process = Process(target=self.cls, args=args, kwargs=kwargs)
         self.process.start()
 
@@ -62,11 +62,8 @@ class ProcessClass:
 
 
 if __name__ == '__main__':
-    stop_event = Event()
-    stop_event.clear()
-    method_queue = Queue()
 
-    with ProcessClass(MyTestClass, stop_event, 50, 20) as pc:
+    with ProcessClass(MyTestClass, 50, 20) as pc:
         pc.acquire()
         for i in range(10):
             if pc.process.is_alive():
