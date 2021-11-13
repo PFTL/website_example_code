@@ -1,0 +1,12 @@
+# import os
+# import sys
+#
+# CURR_DIR = os.path.dirname(os.path.abspath(__file__))
+# print(CURR_DIR)
+# sys.path.append(CURR_DIR)
+# for path in sys.path:
+#     print(path)
+
+from numpy import sleep
+from numpy import array
+sleep()
